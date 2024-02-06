@@ -35,10 +35,10 @@ export default function Home() {
       }
     };
     setButtonData([
-      { id: 1, label: dataRow[1], onClick: () => handleButtonClick(dataRow[1]) },
-      { id: 2, label: dataRow[2], onClick: () => handleButtonClick(dataRow[2]) },
-      { id: 3, label: dataRow[3], onClick: () => handleButtonClick(dataRow[3]) },
-      { id: 4, label: dataRow[4], onClick: () => handleButtonClick(dataRow[4]) },
+      { id: 1, label: dataRow[1], onClick: () => handleButtonClick(dataRow[1]), isDisabled: false },
+      { id: 2, label: dataRow[2], onClick: () => handleButtonClick(dataRow[2]), isDisabled: false },
+      { id: 3, label: dataRow[3], onClick: () => handleButtonClick(dataRow[3]), isDisabled: false },
+      { id: 4, label: dataRow[4], onClick: () => handleButtonClick(dataRow[4]), isDisabled: false },
     ]);
   }, [datasetPosition]);
 
@@ -48,20 +48,25 @@ export default function Home() {
     }
     else if(answer === 1) {
       mainRef.current.style.backgroundColor = 'green';
+          let btndata = buttonData.map(button => ({ ...button, isDisabled: true }));
+    setButtonData(btndata);
     }
     else if (answer === 0) {
       mainRef.current.style.backgroundColor = 'red';
     }
-  }, [answerText]);
+  }, [answer, datasetPosition, buttonData]);
 
   return (
     <main ref={mainRef} className="flex min-h-screen flex-col items-center justify-between p-24">
      <div>
         <p>{data[datasetPosition].question}</p>
-          {buttonData.map((button) => (
-        <AnswerButton key={button.id} label={button.label} correctAnswer={button.correctAnswer} onClick={button.onClick}>
+              {
+          buttonData.map((button) => (
+        <AnswerButton key={button.id} label={button.label} correctAnswer={button.correctAnswer} onClick={button.onClick} disabled={button.isDisabled}>
         </AnswerButton>
-        ))}
+        ))
+              }
+         
         <p>{answerText}</p>
               {answer === 1 ? (
         <button className="bg-blue-300 hover:bg-blue-400 text-white-800 font-bold py-2 px-4 rounded inline-flex items-center"
