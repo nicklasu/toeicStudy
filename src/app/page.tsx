@@ -1,5 +1,7 @@
 // "use client"はブラウザ向けでパフォーマンスが遅いかもしれませんが、React Hookを使用する上で必要です。
 // TODO: React Hookをコンポネント化
+// TODO: テストの終了画面
+// TODO: 質問のランダム化
 'use client'
 import React, { useEffect, useState, useRef } from 'react'
 import data from '../../data/toeic_test.json'
@@ -10,9 +12,9 @@ export default function Home () {
   const [buttonData, setButtonData] = useState([])
   const [answerText, setAnswerText] = useState('')
   const [answer, setAnswer] = useState(2)
+  const [incorrectAnswers, setIncorrectAnswers] = useState(0)
   const mainRef = useRef(null)
   useEffect(() => {
-    console.log(datasetPosition.current)
     const dataRow = data[datasetPosition]
     let correctAnswer
     for (let index = 1; index <= 4; index++) {
@@ -23,13 +25,13 @@ export default function Home () {
     }
 
     const handleButtonClick = (selectedAnswer) => {
-      console.log(correctAnswer)
       if (selectedAnswer === correctAnswer) {
         setAnswerText(selectedAnswer + ' is correct!')
         setAnswer(1)
       } else {
         setAnswerText(selectedAnswer + ' is incorrect!')
         setAnswer(0)
+        setIncorrectAnswers(incorrectAnswers + 1)
       }
     }
     setButtonData([
@@ -55,6 +57,10 @@ export default function Home () {
   return (
     <main ref={mainRef} className="flex min-h-screen flex-col items-center justify-between p-24">
      <div>
+        <p>TOEIC incomplete sentences practice</p>
+        <p>page {datasetPosition} / 30</p>
+        <p>Failure ratio: {(incorrectAnswers / datasetPosition) * 100}%</p>
+        <p>TOEIC score estimation: {incorrectAnswers > 0 ? (990 * (1 - (incorrectAnswers / datasetPosition))) : (990)} points</p>
         <p>{data[datasetPosition].question}</p>
         {
           buttonData.map((button) => (
