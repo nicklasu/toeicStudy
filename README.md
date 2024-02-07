@@ -2,7 +2,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+Download the data from https://www.kaggle.com/datasets/tientd95/toeic-test/data.
+Put the data inside the `data` folder of the project.
+
+After that, run the development server:
 
 ```bash
 npm run dev
