@@ -30,7 +30,16 @@ export default function Home () {
   const [answer, setAnswer] = useState(2)
   const [incorrectAnswers, setIncorrectAnswers] = useState(0)
   const mainRef = useRef(null)
-
+  const handleButtonClick = (selectedAnswer, correctAnswer) => {
+    if (selectedAnswer === correctAnswer) {
+      setAnswerText(selectedAnswer + ' is correct!')
+      setAnswer(1)
+    } else {
+      setAnswerText(selectedAnswer + ' is incorrect!')
+      setAnswer(0)
+      setIncorrectAnswers(incorrectAnswers + 1)
+    }
+  }
   useEffect(() => {
     setTestData(shuffleQuestions(data))
   }, [])
@@ -45,21 +54,11 @@ export default function Home () {
       }
     }
 
-    const handleButtonClick = (selectedAnswer) => {
-      if (selectedAnswer === correctAnswer) {
-        setAnswerText(selectedAnswer + ' is correct!')
-        setAnswer(1)
-      } else {
-        setAnswerText(selectedAnswer + ' is incorrect!')
-        setAnswer(0)
-        setIncorrectAnswers(incorrectAnswers + 1)
-      }
-    }
     setButtonData([
-      { id: 1, label: dataRow[1], onClick: () => { handleButtonClick(dataRow[1]) }, isDisabled: false },
-      { id: 2, label: dataRow[2], onClick: () => { handleButtonClick(dataRow[2]) }, isDisabled: false },
-      { id: 3, label: dataRow[3], onClick: () => { handleButtonClick(dataRow[3]) }, isDisabled: false },
-      { id: 4, label: dataRow[4], onClick: () => { handleButtonClick(dataRow[4]) }, isDisabled: false }
+      { id: 1, label: dataRow[1], onClick: () => { handleButtonClick(dataRow[1], correctAnswer) }, isDisabled: false },
+      { id: 2, label: dataRow[2], onClick: () => { handleButtonClick(dataRow[2], correctAnswer) }, isDisabled: false },
+      { id: 3, label: dataRow[3], onClick: () => { handleButtonClick(dataRow[3], correctAnswer) }, isDisabled: false },
+      { id: 4, label: dataRow[4], onClick: () => { handleButtonClick(dataRow[4], correctAnswer) }, isDisabled: false }
     ])
   }, [testData, datasetPosition])
 
@@ -73,7 +72,7 @@ export default function Home () {
     } else if (answer === 0) {
       mainRef.current.style.backgroundColor = 'red'
     }
-  }, [answer, datasetPosition, buttonData])
+  }, [answer])
 
   return (
     <main ref={mainRef} className="flex min-h-screen flex-col items-center justify-between p-24">
