@@ -2,8 +2,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-Download the data from https://www.kaggle.com/datasets/tientd95/toeic-test/data.
-Put the data inside the `data` folder of the project.
+The TOEIC data was downloaded from https://www.kaggle.com/datasets/tientd95/toeic-test/data
+and is located inside the `data` folder of this project.
 
 After that, run the development server:
 
