@@ -1,6 +1,5 @@
 // "use client"はブラウザ向けでパフォーマンスが遅いかもしれませんが、React Hookを使用する上で必要です。
 // TODO: React Hookをコンポネント化
-// TODO: テストの終了画面
 'use client'
 import React, { useEffect, useState, useRef } from 'react'
 import data from '../../data/toeic_test.json'
@@ -19,13 +18,22 @@ function shuffleQuestions (json) {
 }
 
 export default function Home () {
-  const [testData, setTestData] = useState(shuffleQuestions(data))
-  const [datasetPosition, setDatasetPosition] = useState(1)
+  const [testData, setTestData] = useState([[
+    '1',
+    { 1: '1', 2: '2', 3: '3', 4: '4', answer: 'answer', question: 'question' }],
+  [
+    '2',
+    { 1: '1', 2: '2', 3: '3', 4: '4', answer: 'answer', question: 'question' }]])
+  const [datasetPosition, setDatasetPosition] = useState(0)
   const [buttonData, setButtonData] = useState([])
   const [answerText, setAnswerText] = useState('')
   const [answer, setAnswer] = useState(2)
   const [incorrectAnswers, setIncorrectAnswers] = useState(0)
   const mainRef = useRef(null)
+
+  useEffect(() => {
+    setTestData(shuffleQuestions(data))
+  }, [])
 
   useEffect(() => {
     const dataRow = testData[datasetPosition][1]
@@ -53,7 +61,7 @@ export default function Home () {
       { id: 3, label: dataRow[3], onClick: () => { handleButtonClick(dataRow[3]) }, isDisabled: false },
       { id: 4, label: dataRow[4], onClick: () => { handleButtonClick(dataRow[4]) }, isDisabled: false }
     ])
-  }, [datasetPosition])
+  }, [testData, datasetPosition])
 
   useEffect(() => {
     if (answer === 2) {
@@ -69,11 +77,11 @@ export default function Home () {
 
   return (
     <main ref={mainRef} className="flex min-h-screen flex-col items-center justify-between p-24">
-     <div>
-        <p>TOEIC incomplete sentences practice</p>
-        <p>page {datasetPosition} / 30</p>
-        <p>Failure ratio: {(incorrectAnswers / datasetPosition) * 100}%</p>
-        <p>TOEIC score estimation: {incorrectAnswers > 0 ? (990 * (1 - (incorrectAnswers / datasetPosition))) : (990)} points</p>
+     {datasetPosition < 30
+       ? (
+      <div>
+        <h1>TOEIC incomplete sentences practice</h1>
+        <p>question {datasetPosition + 1} / 30</p>
         <p>{testData[datasetPosition][1].question}</p>
         {
           buttonData.map((button) => (
@@ -96,7 +104,14 @@ export default function Home () {
         </button>
                   )
                 : (<div/>)}
+      </div>)
+       : (
+       <div>
+        <h6>Results</h6>
+        <p>Failure ratio: {(incorrectAnswers / datasetPosition) * 100}%</p>
+        <p>TOEIC score estimation: {incorrectAnswers > 0 ? (990 * (1 - (incorrectAnswers / datasetPosition))) : (990)} points</p>
       </div>
+         )}
     </main>
   )
 }
