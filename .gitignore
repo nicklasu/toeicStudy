@@ -28,6 +28,7 @@ yarn-error.log*
 # local env files
 .env*.local
 .vscode
+data/toeic_test.json
 
 # vercel
 .vercel
