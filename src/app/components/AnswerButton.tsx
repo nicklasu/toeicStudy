@@ -6,11 +6,10 @@ export const AnswerButton = ({ label, onClick, disabled }) => {
     onClick()
     setButtonDisabled(true)
   }
+
   useEffect(() => {
-    if (disabled) {
-      setButtonDisabled(true)
-    } else {
-      setButtonDisabled(false)
+    if (disabled !== isButtonDisabled) {
+      setButtonDisabled(disabled)
     }
   }, [disabled])
 
