@@ -21,10 +21,10 @@ const shuffleQuestions = (json: any) => {
 export default function Home () {
   const [testData, setTestData] = useState([[
     '1',
-    { 1: '1', 2: '2', 3: '3', 4: '4', answer: 'answer', question: 'question' }],
+    { 1: '1', 2: '2', 3: '3', 4: '4', anwser: 'answer', question: 'question' }],
   [
     '2',
-    { 1: '1', 2: '2', 3: '3', 4: '4', answer: 'answer', question: 'question' }]])
+    { 1: '1', 2: '2', 3: '3', 4: '4', anwser: 'answer', question: 'question' }]])
   const [datasetPosition, setDatasetPosition] = useState(0)
   const [buttonData, setButtonData] = useState([])
   const [answerText, setAnswerText] = useState('')
