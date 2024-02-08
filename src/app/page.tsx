@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 // "use client"はブラウザ向けでパフォーマンスが遅いかもしれませんが、React Hookを使用する上で必要です。
 // TODO: React Hookをコンポネント化
 'use client'
@@ -5,7 +6,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import data from '../../data/toeic_test.json'
 import { AnswerButton } from './components/AnswerButton'
 
-function shuffleQuestions (json) {
+const shuffleQuestions = (json: any) => {
   const array = []
   for (const i in json) {
     array.push([i, json[i]])
@@ -30,7 +31,7 @@ export default function Home () {
   const [answer, setAnswer] = useState(2)
   const [incorrectAnswers, setIncorrectAnswers] = useState(0)
   const mainRef = useRef(null)
-  const handleButtonClick = (selectedAnswer, correctAnswer) => {
+  const handleButtonClick = (selectedAnswer: string, correctAnswer: string) => {
     if (selectedAnswer === correctAnswer) {
       setAnswerText(selectedAnswer + ' is correct!')
       setAnswer(1)
@@ -46,7 +47,7 @@ export default function Home () {
 
   useEffect(() => {
     const dataRow = testData[datasetPosition][1]
-    let correctAnswer
+    let correctAnswer: string
     for (let index = 1; index <= 4; index++) {
       const element = dataRow[index]
       if (element === dataRow.anwser) {
