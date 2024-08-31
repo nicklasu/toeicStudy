@@ -1,5 +1,7 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+It is deployed here: https://toeic-study.vercel.app/
+
 ## Getting Started
 
 The TOEIC data was downloaded from https://www.kaggle.com/datasets/tientd95/toeic-test/data
